@@ -29,7 +29,6 @@ annotation_font = dict(color=site_css['colors']['pink'], size=24, family=site_cs
 
 base_layout = dict(
     font = base_font,
-    #mapbox=dict(center = go.layout.mapbox.Center(lat = sum(map_df['lat']) / len(map_df), lon = sum(map_df['lon']) / len(map_df))),
     autosize = True,
     margin = dict(b=0, l=0, r=0, t=0),
     mapbox_accesstoken = api_token,
@@ -108,7 +107,7 @@ fig.add_annotation(
     font = annotation_font,
     bgcolor = site_css['colors']['darkgrey'],
     x = 0.05,
-    y = 1,
+    y = .9,
     showarrow = False,
     text = 'Total miles completed: ' + str(total_miles) + ' of 711',
     textangle = 0,

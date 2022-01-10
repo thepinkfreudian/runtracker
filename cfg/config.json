@@ -1,0 +1,20 @@
+{
+	"api_key": "API_KEY",
+	"dashboard_name": "DASHBOARD_NAME",
+	"mapbox_style": "MAPBOX_STYLE_URL",
+	"sql_config": {
+			"hostname": "DATABASE_HOSTNAME",
+			"db": "DATABASE_NAME",
+			"username": "DATABASE_USERNAME",
+			"password": "DATABASE_PASSWORD"
+			},
+	"site_css": {
+			"colors": {
+					"COLOR" : "HEX_CODE"
+				},
+			"fonts": {
+					"TYPE" : "FONT_FAMILY"
+				}
+		},
+	"table_list": ["DATABASE_TABLE_NAMES"]
+}

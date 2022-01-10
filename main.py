@@ -1,8 +1,21 @@
+import sys
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
+# set variable at commandline to push changes to plotly host when script is run
+push = False
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'push':
+        push = True
+    else:
+        argv = str(sys.argv[1])
+        print('Invalid value \'' + argv + '\' passed as sys.argv[1].')
+        sys.exit(1)
+
+
 # constants
+filename = 'wilm_to_buf_mi'
 map_data = './data/wilm_to_buf_gps.csv'
 run_data = './data/run_data.csv'
 api_token = open('./cfg/api_key.txt', 'r').read()
@@ -116,5 +129,12 @@ fig.add_annotation(
     yref = 'paper'
     )
 
-# display final map
-fig.show()
+
+# push to plotly or show map locally depending on value of 'push'
+import chart_studio.plotly as py
+
+if push:
+    py.plot(fig, filename = filename, auto_open=True)
+else:
+    # display final map
+    fig.show()

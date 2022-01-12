@@ -1,3 +1,9 @@
+# local use only
+cfg/config_private.json
+cfg/googlesecrets.json
+cfg/token.json
+.idea/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

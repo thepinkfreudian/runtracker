@@ -2,6 +2,8 @@
 	"api_key": "API_KEY",
 	"dashboard_name": "DASHBOARD_NAME",
 	"mapbox_style": "MAPBOX_STYLE_URL",
+	"start_point" : "START_CITY",
+	"end_point" : "END_CITY",
 	"sql_config": {
 			"hostname": "DATABASE_HOSTNAME",
 			"db": "DATABASE_NAME",
@@ -16,5 +18,8 @@
 					"TYPE" : "FONT_FAMILY"
 				}
 		},
-	"table_list": ["DATABASE_TABLE_NAMES"]
+	"insert_tables": {"dev":  "DEV_TABLE", "prod": "PROD_TABLE"},
+	"table_list": ["DATABASE_TABLES"],
+	"secrets": "SECRETS_FILE",
+	"token_file": "TOKEN_FILE"
 }

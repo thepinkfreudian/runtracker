@@ -17,7 +17,7 @@ if len(sys.argv) > 4:
     if sys.argv[4] == 'push':
         push = True
     else:
-        error_message = "Invalid argument '" + str(sys.argv[3]) + "' passed to sys.argv[3]."
+        error_message = "Invalid argument '" + str(sys.argv[4]) + "' passed to sys.argv[4]."
         utils.exit_on_error(error_message)
 
 valid_start_date = utils.validate_input_date(start_date)
@@ -32,6 +32,6 @@ if not valid_environment:
     error_message = "Invalid environment '" + str(environment) + "' passed to sys.argv[3]."
     utils.exit_on_error(error_message)
 
-config_file = './cfg/config.json'
+config_file = '../cfg/config.json'
 config = utils.get_session_config(config_file)
 

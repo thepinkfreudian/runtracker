@@ -9,27 +9,27 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-secrets = config['secrets']
-token_file = config['token_file']
+secrets = config['google_fit_api']['secrets_file']
+token_file = config['google_fit_api']['token_file']
 
 scopes = ['https://www.googleapis.com/auth/fitness.location.read']
 datasource = 'derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta'
 dataset = ''  # set after function defs
 
-
-def date_to_ns(date):
+# Google API 'dataset' requires time range expressed in nanoseconds
+def date_to_nanoseconds(date):
     dt = datetime.strptime(date + ' 00:00:00,76', '%m/%d/%Y %H:%M:%S,%f')
     nano_dt = dt.timestamp() * 1000000000
 
     return int(nano_dt)
 
 
-def ns_to_date(ns):
+def nanoseconds_to_date(ns):
     dt = datetime.fromtimestamp(ns // 1000000000)
 
     return dt.strftime('%Y-%m-%d')
 
-
+# largely taken from Google's Python API docs
 def get_credentials(token_file, secrets, scopes):
     credentials = None
     # The file token.json stores the user's access and refresh tokens, and is
@@ -65,21 +65,24 @@ def get_api_data(dataset, datasource):
     return response
 
 
-start_date_ns = date_to_ns(start_date)
-end_date_ns = date_to_ns(end_date)
+start_date_ns = date_to_nanoseconds(start_date)
+end_date_ns = date_to_nanoseconds(end_date)
 dataset = str(start_date_ns) + '-' + str(end_date_ns)
 
 credentials = get_credentials(token_file, secrets, scopes)
 response = get_api_data(dataset, datasource)
 
+# isolate time and distance data from the API response
 points = response['point']
 data = pd.DataFrame(columns=['start_date', 'end_date', 'miles'])
 
+# create data frame of start date, end date, and mileage recorded
 for i in range(0, len(points)):
-    start_date = ns_to_date(int(points[i]['startTimeNanos']))
-    end_date = ns_to_date(int(points[i]['endTimeNanos']))
+    start_date = nanoseconds_to_date(int(points[i]['startTimeNanos']))
+    end_date = nanoseconds_to_date(int(points[i]['endTimeNanos']))
     miles = int(points[i]['value'][0]['fpVal']) * 0.000621371  # m to mi
     row = [start_date, end_date, miles]
     data.loc[len(data)] = row
 
+# each date can have several entries over the course of the day; sum to get one entry per day (consistent with database)
 api_data = data.groupby('start_date', as_index=False)['miles'].sum()

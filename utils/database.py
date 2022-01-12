@@ -1,6 +1,7 @@
 import pandas as pd
 from utils.utils import select_all
 
+
 def get_key_list(cursor, insert_table):
 
     columns, data = select_all(cursor, insert_table)

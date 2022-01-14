@@ -150,7 +150,7 @@ fig.add_annotation(**annotation_layout)
 
 # push to plotly or show map locally depending on value of 'push'
 if push:
-    py.plot(fig, filename = dashboard_name, auto_open=True)
+    py.plot(fig, filename = dashboard_name, auto_open=False)
 else:
     # display final map
     fig.show()

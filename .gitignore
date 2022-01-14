@@ -1,4 +1,6 @@
 # local use only
+*.bat
+*.bak
 cfg/config_private.json
 cfg/googlesecrets.json
 cfg/token.json

@@ -52,7 +52,7 @@ def get_credentials(token_file, secrets, scopes):
     return credentials
 
 
-def get_api_data(dataset, datasource):
+def get_api_data(credentials, dataset, datasource):
     try:
         service = build('fitness', 'v1', credentials=credentials)
         response = service.users().dataSources().datasets().get(userId='me',
@@ -70,7 +70,7 @@ end_date_ns = date_to_nanoseconds(end_date)
 dataset = str(start_date_ns) + '-' + str(end_date_ns)
 
 credentials = get_credentials(token_file, secrets, scopes)
-response = get_api_data(dataset, datasource)
+response = get_api_data(credentials, dataset, datasource)
 
 # isolate time and distance data from the API response
 points = response['point']
